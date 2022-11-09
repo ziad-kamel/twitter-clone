@@ -1,0 +1,57 @@
+mixin creatPostForm(userLogedIn)
+    .postFormContainer 
+        .userImageContainer
+            img(src=userLogedIn.profilePic, alt="user Pic")
+        .textareaContainer
+            textarea#postTextarea(placeholder= "What's happenning?")
+            .buttonsContainer
+                button#submitPostButton(disabled="" ) Post
+
+
+
+mixin creatReplyModal(userLogedIn)
+    #replyModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='replyModalLabel', aria-hidden='true')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5#replyModalLabel.modal-title Reply
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+                .modal-body 
+                    #originalPostContainer
+                    .postFormContainer 
+                        .userImageContainer
+                            img(src=userLogedIn.profilePic, alt="user Pic")
+                        .textareaContainer
+                            textarea#replyextarea(placeholder= "What's happenning?")
+                .modal-footer
+                    button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+                    button#SubmitReplyButton.btn.btn-primary(type='button' disabled='') Reply
+
+mixin creatDeletPostModal()
+    #deletPostModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='deletPostModalLabel', aria-hidden='true')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5#deletPostModalLabel.modal-title Delet the post!
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+                .modal-body 
+                    p You won't be able to delete this.
+                .modal-footer
+                    button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+                    button#deletPostButton.btn.btn-primary(type='button' ) Delete
+
+mixin creatPostModals(userLogedIn)
+    +creatReplyModal(userLogedIn)
+    +creatDeletPostModal()
+
+mixin creatFollowButton(user , isFollowing)
+    - text = isFollowing ? 'Following' : 'Follow'
+    - buttonClass = isFollowing ? 'followButton following' : 'followButton'
+    button(class = buttonClass , data-user = user._id) #{text} 
+
+mixin creatTap(name ,href , isSelected)
+    -className = isSelected ? 'tab active' : 'tab'
+    a(href=href , class= className)
+        span #{name} 
